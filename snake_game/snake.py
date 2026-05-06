@@ -45,7 +45,6 @@ def draw_score(win, score):
     win.addstr(0, 2, f" Score: {score} ")
 
 
-# ✅ FIX: bruker vindu, ikke WIDTH/HEIGHT
 def spawn_food(win, snake):
     h, w = win.getmaxyx()
     while True:
@@ -106,7 +105,6 @@ def game_loop(win):
         head_y, head_x = snake[0]
         new_head = (head_y + direction[0], head_x + direction[1])
 
-        # ✅ FIX: ekte terminal kollisjon
         h, w = win.getmaxyx()
         if (
             new_head[0] <= 0 or new_head[0] >= h - 1 or
@@ -127,7 +125,7 @@ def game_loop(win):
         else:
             snake.pop()
 
-        win.clear()
+        win.erase()
         draw_border(win)
         draw_snake(win, snake)
         draw_food(win, food)

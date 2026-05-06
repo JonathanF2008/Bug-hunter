@@ -189,8 +189,12 @@ def main(stdscr):
         stdscr.refresh()
 
         key = stdscr.getch()
-        if key not in (ord("y"), ord("Y")):
-            break
+
+        while key not in (ord("y"), ord("Y"), ord("n"), ord("N")):
+            key = stdscr.getch()
+
+        if key in (ord("n"), ord("N")):
+            exit()
 
 
 if __name__ == "__main__":

@@ -32,7 +32,7 @@ def init_db():
 def get_highscores():
     conn = get_db()
     cursor = conn.cursor()
-    cursor.execute("SELECT id, name, score, created_at FROM scores ORDER BY name DESC LIMIT 10")
+    cursor.execute("SELECT id, name, score, created_at FROM scores ORDER BY score DESC LIMIT 10")
     rows = cursor.fetchall()
     conn.close()
 
@@ -53,7 +53,7 @@ def add_score():
     data = request.get_json()
 
     name = data.get("name", "").strip()
-    score = data.get("score")
+    score = int(data.get("score", 0))
 
     if not name:
         return jsonify({"error": "Name is required"}), 400
@@ -135,4 +135,4 @@ if __name__ == "__main__":
     init_db()
     print("Starting highscore server on http://localhost:5000")
     print("Press CTRL+C to stop")
-    app.run(host="0.0.0.0", port=3000, debug=True)
+    app.run(host="0.0.0.0", port=5000, debug=True)

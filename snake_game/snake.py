@@ -179,6 +179,12 @@ def main(stdscr):
 
         stdscr.clear()
         h, w = stdscr.getmaxyx()
+
+        stdscr.addstr(1, 2, "HIGH SCORES")
+
+        for i, s in enumerate(scores[:10]):
+            stdscr.addstr(3 + i, 2, f"{i+1}. {s['name']} - {s['score']}")
+
         stdscr.addstr(h // 2, (w - 18) // 2, "Play again? (y/n)")
         stdscr.refresh()
 

@@ -88,50 +88,49 @@ def game_loop(win):
     speed = INITIAL_SPEED
     last_move_time = time.time()
 
-   while True:
-    key = win.getch()
+    while True:
+        key = win.getch()
 
-    if key in (ord("q"), ord("Q")):
-        return score, True, "quit"
+        if key in (ord("q"), ord("Q")):
+            return score, True, "quit"
 
+        direction = get_new_direction(key, direction)
 
-    direction = get_new_direction(key, direction)
+        now = time.time()
+        if now - last_move_time < speed:
+            continue
+        last_move_time = now
 
-    now = time.time()
-    if now - last_move_time < speed:
-        continue
-    last_move_time = now
+        head_y, head_x = snake[0]
+        new_head = (head_y + direction[0], head_x + direction[1])
 
-    head_y, head_x = snake[0]
-    new_head = (head_y + direction[0], head_x + direction[1])
+        h, w = win.getmaxyx()
 
-    h, w = win.getmaxyx()
+        if (
+            new_head[0] <= 0 or new_head[0] >= h - 1 or
+            new_head[1] <= 0 or new_head[1] >= w - 1
+        ):
+            return score, False, "crashed into a wall"
 
-    if (
-        new_head[0] <= 0 or new_head[0] >= h - 1 or
-        new_head[1] <= 0 or new_head[1] >= w - 1
-    ):
-        return score, False, "crashed into a wall"
+        if new_head in snake[1:]:
+            return score, False, "bit your own tail"
 
-    if new_head in snake[1:]:
-        return score, False, "bit your own tail"
+        snake.insert(0, new_head)
 
-    snake.insert(0, new_head)
+        if new_head == food:
+            score += 10
+            food = spawn_food(win, snake)
+            if speed > 0.05:
+                speed -= 0.002
+        else:
+            snake.pop()
 
-    if new_head == food:
-        score += 10
-        food = spawn_food(win, snake)
-        if speed > 0.05:
-            speed -= 0.002
-    else:
-        snake.pop()
-
-    win.erase()
-    draw_border(win)
-    draw_snake(win, snake)
-    draw_food(win, food)
-    draw_score(win, score)
-    win.refresh()
+        win.erase()
+        draw_border(win)
+        draw_snake(win, snake)
+        draw_food(win, food)
+        draw_score(win, score)
+        win.refresh()
 
 
 def show_game_over(win, score, reason):

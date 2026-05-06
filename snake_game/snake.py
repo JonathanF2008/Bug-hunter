@@ -9,8 +9,8 @@ import requests
 SERVER_URL = "http://localhost:5000"
 
 # Game settings
-WIDTH = 40
-HEIGHT = 20
+WIDTH = 60
+HEIGHT = 40
 INITIAL_SPEED = 0.15
 
 

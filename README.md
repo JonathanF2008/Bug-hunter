@@ -28,6 +28,17 @@ med aktivert venv:
 python snake.py
 ```
 
+###
+TO TERMINALVINDUER
+Begge skal åpne mappen med repo
+
+Ene vindu: 
+python highscore_server/server.py (ikke spill vindu)
+python3 snake_game/snake.py (Spill vindu)
+
+
+
+
 ## Input
 
 | Key | Action |
